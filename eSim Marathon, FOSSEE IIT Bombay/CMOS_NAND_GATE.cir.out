@@ -1,0 +1,24 @@
+* c:\users\jittin\esim-workspace\cmos_nand_gate\cmos_nand_gate.cir
+
+.lib "models/sky130.lib.spice" tt
+
+xm1  vout input_a vdd vdd sky130_fd_pr__pfet_01v8 w=1 l=0.5 M=1
+xm4  vout input_b vdd vdd sky130_fd_pr__pfet_01v8 w=1 l=0.5 M=1
+xm2  vout input_a net-_m2-pad3_ gnd sky130_fd_pr__nfet_01v8 w=.42 l=.5 M=1
+xm3  net-_m2-pad3_ input_b gnd gnd sky130_fd_pr__nfet_01v8 w=.42 l=.5 M=1
+* u1  /input_a /input_b /vdd /vout port
+ 
+
+v1 input_a gnd pulse(0 1.8 0s 0s 0s 5us 10us)
+v2 input_b gnd pulse(0 1.8 0s 0s 0s 5us 10us)	
+vdd vdd 0 1.8
+
+
+.tran 0.1us 40us
+
+* Control Statements 
+.control
+run
+plot v(input_a) v(input_b)+2v (vout)+4  
+.endc
+.end
